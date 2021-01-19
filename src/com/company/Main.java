@@ -4,25 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public void csvWriter(FileWriter csvWrite, ArrayList<Article> articles, String minid, String maxid) throws IOException {
-        for (int i = 1; i < articles.size(); i++) {
-            csvWrite.append(articles.get(i).source_name + ",");
-            csvWrite.append(articles.get(i).source_id + ",");
-            if (articles.get(i).id == minid || articles.get(i).id == maxid) {
-                csvWrite.append(articles.get(i).published_at + ",");
-            }
-            if (articles.get(i).getContent().contains("[+")) {
-                int firstIndex = articles.get(i).getContent().indexOf("[+");
-                int lastIndex = articles.get(i).getContent().indexOf("chars]") + 6;
-                csvWrite.append(articles.get(i).getContent().substring(firstIndex, lastIndex));
-            }
-            csvWrite.append("\n");
-
-        }
-        csvWrite.flush();
-        csvWrite.close();
-    }
-
     public static void main(String[] args) throws IOException {
         ArrayList<Article> articles = new ArrayList<>();
         String line = "";
