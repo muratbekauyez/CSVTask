@@ -14,16 +14,7 @@ public class Main {
 
         ArticleList al = new ArticleList(paths);
         al.start();
-
-
-
-
-
-
-
     }
-
-
 }
 
 

@@ -51,9 +51,10 @@ public class ArticleList extends Thread {
 
                     Report report = new Report(article.getId(), article.getSource_name(), article.getSource_id());
                     if (article.getContent().contains("[+")) {
-                        int firstIndex = article.getContent().indexOf("[+");
-                        int lastIndex = article.getContent().indexOf("chars]") + 6;
-                        report.setAvg_content_length(article.getContent().substring(firstIndex, lastIndex));
+                        int firstIndex = article.getContent().indexOf("[+")+ 2;
+                        int lastIndex = article.getContent().indexOf("chars]") - 1;
+                        int length = article.getContent().length() + Integer.parseInt(article.getContent().substring(firstIndex, lastIndex));
+                        report.setAvg_content_length("[+"+ length + " chars]");
                     }
 
                     reports.add(report);
@@ -86,20 +87,20 @@ public class ArticleList extends Thread {
                 }
 
             }
+            synchronized (reports) {
+                FileWriter csvWrite = new FileWriter("../csv/record.csv");
+                for (Report rec : reports) {
+                    csvWrite.append(rec.getSource_name() + ",");
+                    csvWrite.append(rec.getSource_id() + ",");
+                    if (rec.getPublished_from() != null) csvWrite.append(rec.getPublished_from());
+                    if (rec.getPublished_to() != null) csvWrite.append(rec.getPublished_to());
+                    if (rec.getAvg_content_length() != null) csvWrite.append(rec.getAvg_content_length());
 
-
-            FileWriter csvWrite = new FileWriter("../csv/record.csv");
-            for (Report rec : reports) {
-                csvWrite.append(rec.getSource_name() + ",");
-                csvWrite.append(rec.getSource_id() + ",");
-                if (rec.getPublished_from() != null) csvWrite.append(rec.getPublished_from());
-                if (rec.getPublished_to() != null) csvWrite.append(rec.getPublished_to());
-                if (rec.getAvg_content_length() != null) csvWrite.append(rec.getAvg_content_length());
-
-                csvWrite.append("\n");
+                    csvWrite.append("\n");
+                }
+                csvWrite.flush();
+                csvWrite.close();
             }
-            csvWrite.flush();
-            csvWrite.close();
 
 
         } catch (IOException e) {
