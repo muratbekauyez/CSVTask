@@ -71,7 +71,7 @@ public class Main {
         /*Date date = new Date(1900, 0,1,00, 01,01);
         Date date1 = new Date(2000,3-1,18,6,9,23);
         System.out.println(date);
-
+        sssssss
         System.out.println(date.getYear());
 */
 
